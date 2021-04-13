@@ -1,25 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useEffect } from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { StyleSheet, Button, View } from 'react-native';
+import { makeRedirectUri, exchangeCodeAsync, useAuthRequest, useAutoDiscovery } from 'expo-auth-session';
+import Constants from 'expo-constants';
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
-  const [numero, setMeuNumero] = useState(0);
-  const [ehPar, setEhPar] = useState(false);
+  const discovery = useAutoDiscovery('https://login.microsoftonline.com/common/v2.0');
 
-  const incrementarNumero = () => {
-    setMeuNumero(numero + 1)
-  }
+  const clientId =  Constants.manifest.extra.microsoftAdClientId;
+  const scopes = ['openid', 'profile', 'email', 'offline_access'];
+  const redirectUri = makeRedirectUri();
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: clientId,
+      scopes: scopes,
+      redirectUri: redirectUri,
+    },
+    discovery
+  );
 
   useEffect(() => {
-    setEhPar(numero % 2 === 0);
-  }, [numero])
+    (async () => {
+      if (response && response.type === 'success'){
+        try {
+          const tokenResponse = await exchangeCodeAsync(
+            {
+              clientId: clientId,
+              scopes: scopes,
+              redirectUri: redirectUri,
+              code: response.params.code,
+              extraParams: {
+                'code_verifier': request?.codeVerifier ?? ''
+              }
+            },
+            {
+              ...discovery
+            }
+          );
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [response, request])
 
   return (
     <View style={styles.container}>
-      <Text>{numero}</Text>
-      <Button title="BOTÃO" onPress={incrementarNumero} />
-      {ehPar ? <Text>Numero é par</Text> : <Text>Número é ímpar</Text>}
-      <StatusBar style="auto" />
+      <Button
+        disabled={!request}
+        title="Login"
+        onPress={() => {
+          promptAsync();
+        }}
+      />
     </View>
   );
 }
