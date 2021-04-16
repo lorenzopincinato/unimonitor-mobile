@@ -3,7 +3,7 @@ import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet, View, Text } from 'react-native';
 import { makeRedirectUri, exchangeCodeAsync, useAuthRequest, useAutoDiscovery } from 'expo-auth-session';
 import Constants from 'expo-constants';
-import { parseJwt } from '@utils/token';
+import { parseJwt } from '../../utils/token';
 
 import MicrosoftLoginButton from './MicrosoftLoginButton.component';
 

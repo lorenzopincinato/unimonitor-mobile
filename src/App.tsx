@@ -5,8 +5,8 @@ import { registerRootComponent } from 'expo'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '@views/Login/Login.view';
-import Home from '@views/Home/Home.view';
+import Login from './views/Login/Login.view';
+import Home from './views/Home/Home.view';
 
 const Stack = createStackNavigator();
 
