@@ -1,13 +1,16 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
+import { registerRootComponent } from 'expo'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from './screens/Login/Login';
-import Home from './screens/Home/Home';
+
+import Login from '@views/Login/Login.view';
+import Home from '@views/Home/Home.view';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -37,3 +40,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export default registerRootComponent(App);

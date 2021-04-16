@@ -5,10 +5,11 @@ export default {
     slug: "unimonitor",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/icon.png",
+    icon: "./src/assets/icon.png",
     scheme: "unimonitor",
+    entryPoint: "./src/App.jsx",
     splash: {
-        image: "./assets/splash.png",
+        image: "./src/assets/splash.png",
         resizeMode: "contain",
         backgroundColor: "#ffffff"
     },
@@ -23,12 +24,12 @@ export default {
     },
     android: {
         adaptiveIcon: {
-            foregroundImage: "./assets/adaptive-icon.png",
+            foregroundImage: "./src/assets/adaptive-icon.png",
             backgroundColor: "#FFFFFF"
         }
     },
     web: {
-        favicon: "./assets/favicon.png"
+        favicon: "./src/assets/favicon.png"
     },
     extra: {
         microsoftAdClientId: process.env.MICROSOFT_AD_CLIENT_ID,
