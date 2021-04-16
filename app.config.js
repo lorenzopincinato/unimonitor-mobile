@@ -32,5 +32,8 @@ export default {
     },
     extra: {
         microsoftAdClientId: process.env.MICROSOFT_AD_CLIENT_ID,
-      },
+    },
+    android: {
+        package: "io.unimonitor.client"
+    }
 }
