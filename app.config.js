@@ -7,7 +7,7 @@ export default {
     orientation: "portrait",
     icon: "./src/assets/icon.png",
     scheme: "unimonitor",
-    entryPoint: "./src/App.jsx",
+    entryPoint: "./src/App.tsx",
     splash: {
         image: "./src/assets/splash.png",
         resizeMode: "contain",

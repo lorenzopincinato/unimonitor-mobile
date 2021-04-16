@@ -14,9 +14,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-          name="Login" 
-          component={Login} 
+        <Stack.Screen
+          name="Login"
+          component={Login}
           options={{
             title: 'UNIMONITOR - LOGIN',
             headerStyle: {
@@ -24,9 +24,9 @@ const App = () => {
             },
             headerTintColor: '#fff',
           }}/>
-        <Stack.Screen 
-          name="Home" 
-          component={Home} 
+        <Stack.Screen
+          name="Home"
+          component={Home}
           options={{
             title: 'UNIMONITOR - HOME',
             headerStyle: {
