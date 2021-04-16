@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { registerRootComponent } from 'expo'
+import { registerRootComponent } from 'expo';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,7 +23,8 @@ const App = () => {
               backgroundColor: '#165095',
             },
             headerTintColor: '#fff',
-          }}/>
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
@@ -39,6 +40,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default registerRootComponent(App);
