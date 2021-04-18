@@ -1,0 +1,4 @@
+{
+  "presets": ["babel-preset-expo"],
+  "plugins": ["inline-dotenv", "@babel/plugin-transform-react-jsx"]
+}

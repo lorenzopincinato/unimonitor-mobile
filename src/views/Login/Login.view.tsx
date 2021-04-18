@@ -1,114 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import * as WebBrowser from 'expo-web-browser';
-import { StyleSheet, View, Text } from 'react-native';
-import {
-  makeRedirectUri,
-  exchangeCodeAsync,
-  useAuthRequest,
-  useAutoDiscovery,
-} from 'expo-auth-session';
-import Constants from 'expo-constants';
-import { parseJwt } from '../../utils/token';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 
 import MicrosoftLoginButton from './MicrosoftLoginButton.component';
-
-WebBrowser.maybeCompleteAuthSession();
+import useMicrosoftLogin from '../../hooks/useMicrosoftLogin.hook';
 
 export default function Login({ navigation }) {
-  const discovery = useAutoDiscovery(
-    'https://login.microsoftonline.com/common/v2.0',
-  );
+  const {
+    user,
+    isLoading,
+    error,
 
-  const clientId = Constants.manifest.extra.microsoftAdClientId;
-  const scopes = ['openid', 'profile', 'email', 'offline_access'];
-  const redirectUri =
-    Constants.appOwnership === 'standalone'
-      ? 'unimonitor://login'
-      : makeRedirectUri({
-          path: 'login',
-          preferLocalhost: true,
-        });
-
-  const [request, response, promptAsync] = useAuthRequest(
-    {
-      clientId,
-      scopes,
-      redirectUri,
-    },
-    discovery,
-  );
-
-  const [error, setError] = useState('');
-  const [microsoftToken, setMicrosftToken] = useState('');
+    login,
+  } = useMicrosoftLogin();
 
   useEffect(() => {
-    (async () => {
-      if (response && response.type === 'success') {
-        try {
-          const tokenResponse = await exchangeCodeAsync(
-            {
-              clientId,
-              scopes,
-              redirectUri,
-              code: response.params.code,
-              extraParams: {
-                code_verifier: request?.codeVerifier ?? '',
-              },
-            },
-            {
-              ...discovery,
-            },
-          );
-
-          setMicrosftToken(tokenResponse.accessToken);
-        } catch (error) {
-          setError('Erro ao entrar na sua conta Microsoft!');
-        }
-      }
-    })();
-  }, [response, request, clientId, scopes, redirectUri, discovery]);
-
-  useEffect(() => {
-    if (microsoftToken) {
-      fetch(
-        'https://qdnpbkj6r1.execute-api.sa-east-1.amazonaws.com/prod/api/sessions/microsoft',
-        {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${microsoftToken}`,
-          },
-        },
-      )
-        .then(tokenResponse => tokenResponse.json())
-        .then(tokenResponseJson => {
-          const userData = parseJwt(tokenResponseJson.token);
-
-          navigation.navigate('Home', { ...userData });
-          setError('');
-        })
-        .catch(error => {
-          console.log(error);
-          setError('Erro ao entrar na sua conta Microsoft!');
-        });
+    if (user) {
+      console.log(user);
+      navigation.navigate('Home', { ...user });
     }
-  }, [microsoftToken, navigation]);
+  }, [user]);
 
   return (
     <View style={styles.container}>
+      {isLoading ? <ActivityIndicator /> : null}
       {error ? <Text>{`Erro: ${error}`}</Text> : null}
-
-      {/* {redirectUri ? <Text>{redirectUri}</Text> : null} */}
-      <MicrosoftLoginButton
-        onPress={() => {
-          try {
-            promptAsync();
-          } catch (error) {
-            setError('Erro ao entrar na sua conta Microsoft!');
-          }
-        }}
-      />
+      {!isLoading ? <MicrosoftLoginButton onPress={login} /> : null}
     </View>
   );
 }

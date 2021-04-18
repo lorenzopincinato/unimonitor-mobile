@@ -1,6 +1,0 @@
-{
-  "presets": ["babel-preset-expo"],
-  "plugins": [
-    ["inline-dotenv"]
-  ]
-}

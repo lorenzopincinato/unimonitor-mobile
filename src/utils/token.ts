@@ -1,6 +1,6 @@
 import Base64 from 'Base64';
 
-const parseJwt = (token: string): unknown => {
+const parseJwt = (token: string): any => {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(
