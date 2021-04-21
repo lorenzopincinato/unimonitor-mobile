@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './views/Login/Login.view';
 import Home from './views/Home/Home.view';
+import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={NoticeBoard}
           options={{
             title: 'UNIMONITOR - LOGIN',
             headerStyle: {
