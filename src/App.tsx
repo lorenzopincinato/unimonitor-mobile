@@ -8,6 +8,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './views/Login/Login.view';
 import Home from './views/Home/Home.view';
 import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
+import NoticeDetails from './views/NoticeDetails/NoticeDetails.view';
+import BellIcon from './icons/BellIcon.icon';
 
 const Stack = createStackNavigator();
 
@@ -17,9 +19,9 @@ const App = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={NoticeBoard}
+          component={Login}
           options={{
-            title: 'UNIMONITOR - LOGIN',
+            title: 'Unimonitor',
             headerStyle: {
               backgroundColor: '#165095',
             },
@@ -29,13 +31,40 @@ const App = () => {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={({ navigation }) => {
+            return {
+              title: 'Monitorias',
+              headerStyle: {
+                backgroundColor: '#165095',
+              },
+              headerTintColor: '#fff',
+              headerRight: () => (
+                <BellIcon onPress={() => navigation.navigate('NoticeBoard')} />
+              ),
+              headerLeft: () => null,
+            };
+          }}
+        />
+        <Stack.Screen
+          name="NoticeBoard"
+          component={NoticeBoard}
           options={{
-            title: 'UNIMONITOR - HOME',
+            title: 'Quadro de avisos',
             headerStyle: {
               backgroundColor: '#165095',
             },
             headerTintColor: '#fff',
-            headerLeft: () => null,
+          }}
+        />
+        <Stack.Screen
+          name="NoticeDetails"
+          component={NoticeDetails}
+          options={{
+            title: 'Detalhes do Aviso',
+            headerStyle: {
+              backgroundColor: '#165095',
+            },
+            headerTintColor: '#fff',
           }}
         />
       </Stack.Navigator>
