@@ -9,6 +9,7 @@ import { parseJwt } from '../utils/token';
 const useMicrosoftLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(undefined);
+  const [token, setToken] = useState(undefined);
   const [error, setError] = useState('');
 
   const authConfig = {
@@ -45,8 +46,10 @@ const useMicrosoftLogin = () => {
         );
 
         setUser(parseJwt(token));
+        setToken(token);
         setIsLoading(false);
       } catch (error) {
+        console.log(error);
         setError(error);
         setIsLoading(false);
       }
@@ -55,6 +58,7 @@ const useMicrosoftLogin = () => {
 
   return {
     user,
+    token,
     isLoading,
     error,
 

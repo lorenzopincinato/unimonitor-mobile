@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
 
 const Home = ({ route, navigation }) => {
   const { name, register, email, roles } = route.params;
-
   return (
     <View style={styles.container}>
       <Text>{`Nome: ${name}`}</Text>
