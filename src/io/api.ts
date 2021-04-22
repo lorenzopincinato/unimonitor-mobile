@@ -8,8 +8,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async config => {
-    console.log(config.url);
-
     if (config.url !== 'sessions/microsoft') {
       try {
         const token = await getUnimonitorApiToken();
