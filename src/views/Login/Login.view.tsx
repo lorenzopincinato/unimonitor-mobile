@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
+import LoadingIndicator from '../../components/LoadingIndicator.component';
 import MicrosoftLoginButton from './MicrosoftLoginButton.component';
 import useMicrosoftLogin from '../../hooks/useMicrosoftLogin.hook';
 
@@ -27,7 +28,7 @@ export default function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {isLoading ? <ActivityIndicator /> : null}
+      {isLoading ? <LoadingIndicator /> : null}
       {error ? <Text>{`Erro: ao entrar com conta Microsoft`}</Text> : null}
       {!isLoading ? <MicrosoftLoginButton onPress={login} /> : null}
     </View>

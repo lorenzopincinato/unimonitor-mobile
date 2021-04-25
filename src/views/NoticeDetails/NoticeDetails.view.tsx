@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const NoticeDetails = ({ route, navigation }) => {
   const { notice } = route.params;
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: notice.title,
+    });
+  }, []);
 
   return (
     <View>

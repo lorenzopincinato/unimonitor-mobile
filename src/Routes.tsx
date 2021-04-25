@@ -8,8 +8,6 @@ import Home from './views/Home/Home.view';
 import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
 import NoticeDetails from './views/NoticeDetails/NoticeDetails.view';
 
-import BellIcon from './icons/BellIcon.icon';
-
 const Stack = createStackNavigator();
 
 const Routes = () => {
@@ -27,14 +25,9 @@ const Routes = () => {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={({ navigation }) => {
-            return {
-              title: 'Monitorias',
-              headerRight: () => (
-                <BellIcon onPress={() => navigation.navigate('NoticeBoard')} />
-              ),
-              headerLeft: () => null,
-            };
+          options={{
+            title: 'Monitorias',
+            headerLeft: () => null,
           }}
         />
         <Stack.Screen
