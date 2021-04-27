@@ -13,32 +13,13 @@ const Notice = ({ navigation, index, length, notice }) => {
       onPress={() => openNoticeDetails()}
     >
       <>
-        <Text style={styles.boldText}>{notice.author.name}</Text>
+        <Text style={styles.title}>{notice.title}</Text>
 
-        <View style={styles.inlineText}>
-          <Text style={styles.boldText}>Disciplina: </Text>
-          <Text>{notice.subject.name}</Text>
-        </View>
+        <Text style={styles.subject}>{notice.subject.name}</Text>
 
-        <View style={styles.inlineText}>
-          <Text style={styles.boldText}>Assunto: </Text>
-          <Text>{notice.title}</Text>
-        </View>
-
-        <View style={styles.inlineText}>
-          <Text style={styles.boldText}>Aviso: </Text>
-          <Text
-            ellipsizeMode="tail"
-            numberOfLines={1}
-            style={styles.noticePreview}
-          >
-            {notice.body}
-          </Text>
-        </View>
-
-        <View style={styles.rightText}>
-          <Text style={styles.italicText}>Publicado em </Text>
-          <Text style={styles.italicText}>{notice.date}</Text>
+        <View style={styles.footer}>
+          <Text style={styles.author}>{notice.author.name}</Text>
+          <Text style={styles.time}>{notice.time}</Text>
         </View>
       </>
     </TouchableOpacity>
@@ -57,25 +38,28 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#FFFFFF',
   },
-  boldText: {
+  title: {
+    fontSize: 18,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
-  italicText: {
+  subject: {
+    fontSize: 16,
+  },
+  footer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+
+    marginTop: 4,
+  },
+  author: {
+    fontSize: 16,
+  },
+  time: {
+    fontSize: 14,
     fontStyle: 'italic',
-  },
-  inlineText: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
-  },
-  noticePreview: {
-    flex: 1,
-    flexWrap: 'wrap',
-  },
-  rightText: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
   },
 });
 

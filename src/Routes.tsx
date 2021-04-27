@@ -34,14 +34,14 @@ const Routes = () => {
           name="NoticeBoard"
           component={NoticeBoard}
           options={{
-            title: 'Quadro de avisos',
+            title: 'Quadro de Avisos',
           }}
         />
         <Stack.Screen
           name="NoticeDetails"
           component={NoticeDetails}
           options={{
-            title: 'Detalhes do Aviso',
+            title: 'Aviso',
           }}
         />
       </Stack.Navigator>

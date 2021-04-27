@@ -1,71 +1,64 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const NoticeDetails = ({ route, navigation }) => {
   const { notice } = route.params;
 
-  useEffect(() => {
-    navigation.setOptions({
-      title: notice.title,
-    });
-  }, []);
-
   return (
-    <View>
-      <Text style={styles.boldText}>{notice.author.name}</Text>
+    <View style={styles.wrapper}>
+      <Text style={styles.title}>{notice.title}</Text>
+      <Text style={styles.subject}>{notice.subject.name}</Text>
 
-      <View style={styles.inlineText}>
-        <Text style={styles.boldText}>Disciplina: </Text>
-        <Text>{notice.subject.name}</Text>
-      </View>
+      <Text style={styles.author}>{notice.author.name}</Text>
 
-      <View style={styles.inlineText}>
-        <Text style={styles.boldText}>Assunto: </Text>
-        <Text>{notice.title}</Text>
-      </View>
+      <Text style={styles.body}>{notice.body}</Text>
 
-      <View style={styles.inlineText}>
-        <Text style={styles.boldText}>Aviso: </Text>
-        <Text>{notice.body}</Text>
-      </View>
-
-      <View style={styles.rightText}>
-        <Text style={styles.italicText}>Publicado em </Text>
-        <Text style={styles.italicText}>{notice.date}</Text>
+      <View style={styles.footer}>
+        <Text style={styles.date}>{`Publicado em ${notice.date}`}</Text>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  weekdayHeader: {
+  wrapper: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+
+    padding: 12,
+
+    backgroundColor: '#F7FAFC',
+    height: '100%',
   },
-  headerText: {
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  subject: {
     fontSize: 18,
-    fontWeight: 'bold',
   },
-  noticeContainer: {
-    borderColor: '#000000',
-    borderWidth: 1,
-    borderRadius: 9,
+  author: {
+    fontSize: 18,
+
+    marginTop: 14,
   },
-  boldText: {
-    fontWeight: 'bold',
+  body: {
+    fontSize: 18,
+
+    marginTop: 14,
   },
-  italicText: {
-    fontStyle: 'italic',
-  },
-  inlineText: {
+  footer: {
+    marginTop: 8,
+
     display: 'flex',
     flexDirection: 'row',
-  },
-  rightText: {
-    display: 'flex',
-    flexDirection: 'row',
+    width: '100%',
     justifyContent: 'flex-end',
+  },
+  date: {
+    fontSize: 16,
+    fontStyle: 'italic',
   },
 });
 

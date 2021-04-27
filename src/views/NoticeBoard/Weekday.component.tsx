@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },

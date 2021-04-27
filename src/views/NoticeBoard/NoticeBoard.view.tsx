@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import LoadingIndicator from '../../components/LoadingIndicator.component';
 import api from '../../io/api';
 import Weekday from './Weekday.component';
@@ -8,6 +8,17 @@ const NoticeBoard = ({ navigation }) => {
   const [weekdays, setWeekdays] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const alert = useMemo(() => {
+    if (!isLoading) {
+      if (error) return error;
+
+      if (weekdays.length === 0)
+        return 'Nenhum aviso por enquanto.\nAtive as notificações para receber os\navisos quando forem publicados!';
+    }
+
+    return null;
+  }, [weekdays, isLoading, error]);
 
   const getWeekdayName = weekdayNumber => {
     const weekdayNames = [
@@ -53,7 +64,14 @@ const NoticeBoard = ({ navigation }) => {
                   .padStart(
                     2,
                     '0',
-                  )}/${date.getFullYear()} ${date
+                  )}/${date.getFullYear()} ás ${date
+                  .getHours()
+                  .toString()
+                  .padStart(2, '0')}:${date
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, '0')}`,
+                time: `${date
                   .getHours()
                   .toString()
                   .padStart(2, '0')}:${date
@@ -76,32 +94,49 @@ const NoticeBoard = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.wrapper}>
-      {isLoading ? <LoadingIndicator /> : null}
-      {weekdays.map((weekday, index) => (
-        <Weekday
-          key={weekday.date}
-          navigation={navigation}
-          index={index}
-          name={weekday.name}
-          date={weekday.date}
-          notices={weekday.notices}
-        />
-      ))}
-    </View>
+    <>
+      {isLoading || alert ? (
+        <View style={styles.container}>
+          {isLoading ? <LoadingIndicator /> : null}
+          {alert ? <Text style={styles.alert}>{error}</Text> : null}
+        </View>
+      ) : null}
+      {weekdays.length > 0 ? (
+        <View style={styles.wrapper}>
+          {weekdays.map((weekday, index) => (
+            <Weekday
+              key={weekday.date}
+              navigation={navigation}
+              index={index}
+              name={weekday.name}
+              date={weekday.date}
+              notices={weekday.notices}
+            />
+          ))}
+        </View>
+      ) : null}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F7FAFC',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   wrapper: {
     display: 'flex',
     flexDirection: 'column',
 
-    paddingHorizontal: 12,
-    paddingVertical: 16,
+    padding: 12,
 
     backgroundColor: '#F7FAFC',
     height: '100%',
+  },
+  alert: {
+    textAlign: 'center',
   },
 });
 
