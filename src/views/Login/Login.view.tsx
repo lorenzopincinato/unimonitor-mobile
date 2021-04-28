@@ -5,7 +5,7 @@ import LoadingIndicator from '../../components/LoadingIndicator.component';
 import MicrosoftLoginButton from './MicrosoftLoginButton.component';
 import useMicrosoftLogin from '../../hooks/useMicrosoftLogin.hook';
 
-import { setUnimonitorApiToken } from '../../io/asyncStorage';
+import { setUnimonitorApiToken, setUserId } from '../../io/asyncStorage';
 
 export default function Login({ navigation }) {
   const {
@@ -21,6 +21,7 @@ export default function Login({ navigation }) {
     (async () => {
       if (user && token) {
         await setUnimonitorApiToken(token);
+        await setUserId(user.id ?? 0);
         navigation.navigate('Home', { ...user });
       }
     })();
@@ -38,7 +39,7 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F7FAFC',
     alignItems: 'center',
     justifyContent: 'center',
   },

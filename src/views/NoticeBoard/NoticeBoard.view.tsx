@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
@@ -16,6 +16,16 @@ const NoticeBoard = ({ navigation }) => {
   const [error, setError] = useState('');
 
   const navigation2 = useNavigation(); //FIXME const navigation
+  const alert = useMemo(() => {
+    if (!isLoading) {
+      if (error) return error;
+
+      if (weekdays.length === 0)
+        return 'Nenhum aviso por enquanto.\nAtive as notificações para receber os\navisos quando forem publicados!';
+    }
+
+    return null;
+  }, [weekdays, isLoading, error]);
 
   const getWeekdayName = weekdayNumber => {
     const weekdayNames = [
@@ -61,7 +71,14 @@ const NoticeBoard = ({ navigation }) => {
                   .padStart(
                     2,
                     '0',
-                  )}/${date.getFullYear()} ${date
+                  )}/${date.getFullYear()} ás ${date
+                  .getHours()
+                  .toString()
+                  .padStart(2, '0')}:${date
+                  .getMinutes()
+                  .toString()
+                  .padStart(2, '0')}`,
+                time: `${date
                   .getHours()
                   .toString()
                   .padStart(2, '0')}:${date
@@ -88,20 +105,27 @@ const NoticeBoard = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.wrapper}>
-        {isLoading ? <LoadingIndicator /> : null}
-        {weekdays.map((weekday, index) => (
-          <Weekday
-            key={weekday.date}
-            navigation={navigation}
-            index={index}
-            name={weekday.name}
-            date={weekday.date}
-            notices={weekday.notices}
-          />
-        ))}
-      </View>
+    <>
+      {isLoading || alert ? (
+        <View style={styles.container}>
+          {isLoading ? <LoadingIndicator /> : null}
+          {alert ? <Text style={styles.alert}>{error}</Text> : null}
+        </View>
+      ) : null}
+      {weekdays.length > 0 ? (
+        <View style={styles.wrapper}>
+          {weekdays.map((weekday, index) => (
+            <Weekday
+              key={weekday.date}
+              navigation={navigation}
+              index={index}
+              name={weekday.name}
+              date={weekday.date}
+              notices={weekday.notices}
+            />
+          ))}
+        </View>
+      ) : null}
 
       <TouchableOpacity
         style={styles.plusButton}
@@ -110,7 +134,7 @@ const NoticeBoard = ({ navigation }) => {
       >
         <AntDesign name="plus" style={styles.plusButtonIcon} />
       </TouchableOpacity>
-    </View>
+    </>
   );
 };
 
@@ -139,6 +163,13 @@ const styles = StyleSheet.create({
   plusButtonIcon: {
     fontSize: 32,
     color: colors.white,
+    padding: 12,
+
+    backgroundColor: '#F7FAFC',
+    height: '100%',
+  },
+  alert: {
+    textAlign: 'center',
   },
 });
 
