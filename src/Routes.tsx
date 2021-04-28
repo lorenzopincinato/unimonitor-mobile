@@ -7,6 +7,7 @@ import Login from './views/Login/Login.view';
 import Home from './views/Home/Home.view';
 import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
 import NoticeDetails from './views/NoticeDetails/NoticeDetails.view';
+import NoticeWrite from './views/NoticeWrite/NoticeWrite.view';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const Routes = () => {
         }}
       >
         <Stack.Screen name="Login" component={Login} />
+
         <Stack.Screen
           name="Home"
           component={Home}
@@ -30,6 +32,15 @@ const Routes = () => {
             headerLeft: () => null,
           }}
         />
+
+        <Stack.Screen
+          name="NoticeWrite"
+          component={NoticeWrite}
+          options={{
+            title: 'Novo aviso',
+          }}
+        />
+
         <Stack.Screen
           name="NoticeBoard"
           component={NoticeBoard}
@@ -37,6 +48,7 @@ const Routes = () => {
             title: 'Quadro de avisos',
           }}
         />
+
         <Stack.Screen
           name="NoticeDetails"
           component={NoticeDetails}
