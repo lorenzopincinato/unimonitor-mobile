@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 import { AntDesign } from '@expo/vector-icons';
@@ -164,8 +164,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: colors.white,
     padding: 12,
-
-    backgroundColor: '#F7FAFC',
     height: '100%',
   },
   alert: {
