@@ -8,6 +8,7 @@ import Home from './views/Home/Home.view';
 import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
 import NoticeDetails from './views/NoticeDetails/NoticeDetails.view';
 import NoticeWrite from './views/NoticeWrite/NoticeWrite.view';
+import DebugToken from './views/DebugToken/DebugToken.viuew';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,14 @@ const Routes = () => {
         }}
       >
         <Stack.Screen name="Login" component={Login} />
+
+        <Stack.Screen
+          name="DebugToken"
+          component={DebugToken}
+          options={{
+            title: 'Entrar com Token de Depuração',
+          }}
+        />
 
         <Stack.Screen
           name="Home"

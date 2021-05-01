@@ -32,6 +32,7 @@ export default {
   },
   extra: {
     microsoftAdClientId: process.env.MICROSOFT_AD_CLIENT_ID,
-    unimonitorApiUrl: process.env.UNIMONITOR_API_URL
+    unimonitorApiUrl: process.env.UNIMONITOR_API_URL,
+    enableDebugToken: true,
   },
 };

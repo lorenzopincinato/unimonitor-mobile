@@ -4,6 +4,8 @@ const colors = {
   black: '#000000',
   white: '#FFFFFF',
 
+  backgroud: '#F7FAFC',
+
   grey100: '#F7FAFC',
   grey300: '#CBD5E0',
   grey500: '#BDBDBD',

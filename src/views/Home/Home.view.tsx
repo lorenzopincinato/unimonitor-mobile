@@ -1,24 +1,9 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import {
-  HeaderButton,
-  HeaderButtons,
-  Item,
-} from 'react-navigation-header-buttons';
-import { Ionicons } from '@expo/vector-icons';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import IoniconsHeaderButton from '../../components/IoniconsHeaderButton.component';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const IoniconsHeaderButton = props => (
-  <HeaderButton IconComponent={Ionicons} iconSize={24} {...props} />
-);
+import colors from '../../styles/colors';
 
 const Home = ({ route, navigation }) => {
   useEffect(() => {
@@ -57,5 +42,14 @@ const Home = ({ route, navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroud,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default Home;

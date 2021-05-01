@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import Constants from 'expo-constants';
 
 import LoadingIndicator from '../../components/LoadingIndicator.component';
 import MicrosoftLoginButton from './MicrosoftLoginButton.component';
 import useMicrosoftLogin from '../../hooks/useMicrosoftLogin.hook';
 
 import { setUnimonitorApiToken, setUserId } from '../../io/asyncStorage';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import IoniconsHeaderButton from '../../components/IoniconsHeaderButton.component';
 
 export default function Login({ navigation }) {
   const {
@@ -16,6 +19,23 @@ export default function Login({ navigation }) {
 
     login,
   } = useMicrosoftLogin();
+
+  useEffect(() => {
+    if (Constants.manifest.extra.enableDebugToken) {
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+            <Item
+              title="notice board"
+              iconName="bug"
+              color="white"
+              onPress={() => navigation.navigate('DebugToken')}
+            />
+          </HeaderButtons>
+        ),
+      });
+    }
+  }, [Constants.manifest.extra.enableDebugToken]);
 
   useEffect(() => {
     (async () => {
