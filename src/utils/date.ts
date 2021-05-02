@@ -18,4 +18,22 @@ const getDayAndMonth = (date: Date) => {
     .padStart(2, '0')}`;
 };
 
-export { getWeekdayName, getDayAndMonth };
+const getDayMonthAndYear = (date: Date) => {
+  return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}/${date.getFullYear()}`;
+};
+
+const getMinutesAndHours = (date: Date) => {
+  return `${date
+    .getHours()
+    .toString()
+    .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+};
+
+export {
+  getWeekdayName,
+  getDayAndMonth,
+  getDayMonthAndYear,
+  getMinutesAndHours,
+};

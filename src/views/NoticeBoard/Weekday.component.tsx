@@ -19,7 +19,7 @@ const Weekday = ({ navigation, index, date, name, notices }) => {
       </View>
       {notices.map((notice, index) => (
         <Notice
-          key={notice.id}
+          key={`notice-${notice.id}`}
           navigation={navigation}
           index={index}
           length={notice.length}

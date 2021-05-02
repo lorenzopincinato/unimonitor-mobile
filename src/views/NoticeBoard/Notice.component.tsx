@@ -8,7 +8,7 @@ const Notice = ({ navigation, index, length, notice }) => {
 
   return (
     <TouchableOpacity
-      key={notice.id}
+      key={`notice-${notice.id}`}
       style={styles.noticeContainer}
       onPress={() => openNoticeDetails()}
     >

@@ -7,15 +7,23 @@ import { AntDesign } from '@expo/vector-icons';
 import LoadingIndicator from '../../components/LoadingIndicator.component';
 import Weekday from './Weekday.component';
 
+import {
+  getDayAndMonth,
+  getDayMonthAndYear,
+  getMinutesAndHours,
+  getWeekdayName,
+} from '../../utils/date';
+
 import api from '../../io/api';
 import colors from '../../styles/colors';
 
-const NoticeBoard = ({ navigation }) => {
+const NoticeBoard = () => {
+  const navigation = useNavigation();
+
   const [weekdays, setWeekdays] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const navigation2 = useNavigation(); //FIXME const navigation
   const alert = useMemo(() => {
     if (!isLoading) {
       if (error) return error;
@@ -26,20 +34,6 @@ const NoticeBoard = ({ navigation }) => {
 
     return null;
   }, [weekdays, isLoading, error]);
-
-  const getWeekdayName = weekdayNumber => {
-    const weekdayNames = [
-      'Domingo',
-      'Segunda',
-      'Terça',
-      'Quarta',
-      'Quinta',
-      'Sexta',
-      'Sábado',
-    ];
-
-    return weekdayNames[weekdayNumber];
-  };
 
   useEffect(() => {
     (async () => {
@@ -53,38 +47,17 @@ const NoticeBoard = ({ navigation }) => {
           const date = new Date(weekday.date);
 
           return {
-            date: `${date.getDate().toString().padStart(2, '0')}/${(
-              date.getMonth() + 1
-            )
-              .toString()
-              .padStart(2, '0')}`,
-            name: getWeekdayName(weekday.weekdayNumber),
+            date: getDayAndMonth(date),
+            name: getWeekdayName(date),
             notices: weekday.notices.map(notice => {
               const date = new Date(notice.date);
 
               return {
                 ...notice,
-                date: `${date.getDate().toString().padStart(2, '0')}/${(
-                  date.getMonth() + 1
-                )
-                  .toString()
-                  .padStart(
-                    2,
-                    '0',
-                  )}/${date.getFullYear()} ás ${date
-                  .getHours()
-                  .toString()
-                  .padStart(2, '0')}:${date
-                  .getMinutes()
-                  .toString()
-                  .padStart(2, '0')}`,
-                time: `${date
-                  .getHours()
-                  .toString()
-                  .padStart(2, '0')}:${date
-                  .getMinutes()
-                  .toString()
-                  .padStart(2, '0')}`,
+                date: `${getDayMonthAndYear(date)} ás ${getMinutesAndHours(
+                  date,
+                )}`,
+                time: getMinutesAndHours(date),
               };
             }),
           };
@@ -101,7 +74,7 @@ const NoticeBoard = ({ navigation }) => {
   }, []);
 
   function handleNewNotice() {
-    navigation2.navigate('NoticeWrite');
+    navigation.navigate('NoticeWrite');
   }
 
   return (
@@ -109,14 +82,14 @@ const NoticeBoard = ({ navigation }) => {
       {isLoading || alert ? (
         <View style={styles.container}>
           {isLoading ? <LoadingIndicator /> : null}
-          {alert ? <Text style={styles.alert}>{error}</Text> : null}
+          {alert ? <Text style={styles.alert}>{alert}</Text> : null}
         </View>
       ) : null}
       {weekdays.length > 0 ? (
         <View style={styles.wrapper}>
           {weekdays.map((weekday, index) => (
             <Weekday
-              key={weekday.date}
+              key={`weekday-${weekday.date}`}
               navigation={navigation}
               index={index}
               name={weekday.name}
