@@ -1,32 +1,47 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import IoniconsHeaderButton from '../../components/IoniconsHeaderButton.component';
+import { useNavigation, useRoute } from '@react-navigation/core';
+
+import { getWeekdayName, getDayAndMonth } from '../../utils/date';
+
+import HomeHeaderLeft from './HomeHeaderLeft.component';
+import HomeHeaderRight from './HomeHeaderRight.component';
+import Weekday from './Weekday.component';
 
 import colors from '../../styles/colors';
 
-const Home = ({ route, navigation }) => {
+const weekdays = [
+  {
+    name: getWeekdayName(new Date('2021-05-03')),
+    date: getDayAndMonth(new Date('2021-05-03')),
+    schedules: [
+      {
+        id: 1,
+        begin: '17:00',
+        end: '19:00',
+        status: 'available',
+        subject: {
+          id: 1,
+          name: 'Banco de Dados A',
+        },
+      },
+    ],
+  },
+];
+
+const Home = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item
-            title="notice board"
-            iconName="notifications"
-            color="white"
-            onPress={() => navigation.navigate('NoticeBoard')}
-          />
-        </HeaderButtons>
+      // eslint-disable-next-line react/display-name
+      headerRight: (props: JSX.IntrinsicAttributes) => (
+        <HomeHeaderRight {...props} />
       ),
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-          <Item
-            title="menu"
-            iconName="menu"
-            color="white"
-            onPress={() => alert('open menu')}
-          />
-        </HeaderButtons>
+      // eslint-disable-next-line react/display-name
+      headerLeft: (props: JSX.IntrinsicAttributes) => (
+        <HomeHeaderLeft {...props} />
       ),
     });
   }, []);
@@ -35,20 +50,30 @@ const Home = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>{`Nome: ${name}`}</Text>
-      <Text>{`Registro: ${register}`}</Text>
-      <Text>{`Email: ${email}`}</Text>
-      <Text>{`Permissões: ${roles.map(role => role.name).join(', ')}`}</Text>
+      {weekdays.map((weekday, index) => (
+        <Weekday
+          key={`weekday-${weekday.date}`}
+          name={weekday.name}
+          date={weekday.date}
+          schedules={weekday.schedules}
+          index={index}
+        />
+      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+
     backgroundColor: colors.backgroud,
-    alignItems: 'center',
-    justifyContent: 'center',
+
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+
+    height: '100%',
   },
 });
 
