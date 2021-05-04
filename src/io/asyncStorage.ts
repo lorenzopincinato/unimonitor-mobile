@@ -1,4 +1,5 @@
 import asyncStorage from '@react-native-community/async-storage';
+import { parseJwt } from '../utils/token';
 
 const getUnimonitorApiToken = async () => {
   return await asyncStorage.getItem('UNIMONITOR_API_TOKEN');
