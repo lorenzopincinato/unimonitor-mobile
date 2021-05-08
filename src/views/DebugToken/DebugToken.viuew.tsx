@@ -31,8 +31,6 @@ const DebugToken = () => {
   const handleLogin = useCallback(() => {
     (async () => {
       try {
-        console.log(user);
-
         await setUnimonitorApiToken(token);
         await setUserId(user.id ?? 0);
 
