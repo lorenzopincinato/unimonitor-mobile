@@ -9,6 +9,7 @@ import HomeHeaderRight from './HomeHeaderRight.component';
 import Weekday from './Weekday.component';
 
 import colors from '../../styles/colors';
+import WeekdaySelection from './WeekSelection.component';
 
 const weekdays = [
   {
@@ -49,16 +50,19 @@ const Home = () => {
   const { name, register, email, roles } = route.params;
 
   return (
-    <View style={styles.container}>
-      {weekdays.map((weekday, index) => (
-        <Weekday
-          key={`weekday-${weekday.date}`}
-          name={weekday.name}
-          date={weekday.date}
-          schedules={weekday.schedules}
-          index={index}
-        />
-      ))}
+    <View>
+      <WeekdaySelection />
+      <View style={styles.container}>
+        {weekdays.map((weekday, index) => (
+          <Weekday
+            key={`weekday-${weekday.date}`}
+            name={weekday.name}
+            date={weekday.date}
+            schedules={weekday.schedules}
+            index={index}
+          />
+        ))}
+      </View>
     </View>
   );
 };
