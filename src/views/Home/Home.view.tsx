@@ -10,6 +10,7 @@ import Weekday from './Weekday.component';
 
 import colors from '../../styles/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import WeekdaySelection from './WeekSelection.component';
 
 const weekdays = [
   {
@@ -54,16 +55,20 @@ const Home = () => {
   }
 
   return (
-    <View style={styles.container}>
-      {weekdays.map((weekday, index) => (
-        <Weekday
-          key={`weekday-${weekday.date}`}
-          name={weekday.name}
-          date={weekday.date}
-          schedules={weekday.schedules}
-          index={index}
-        />
-      ))}
+    <View>
+      <WeekdaySelection />
+      <View style={styles.container}>
+        {weekdays.map((weekday, index) => (
+          <Weekday
+            key={`weekday-${weekday.date}`}
+            name={weekday.name}
+            date={weekday.date}
+            schedules={weekday.schedules}
+            index={index}
+          />
+        ))}
+      </View>
+
       {/* TODO: passar para o Menu */}
       <TouchableOpacity style={styles.button} onPress={goToSchedule}>
         <Text style={styles.buttonText}>Horário Monitoria</Text>

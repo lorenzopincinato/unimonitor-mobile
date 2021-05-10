@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import CustomButton from './CustomButton.component';
 import HorizontalRule from '../../components/HorizontalRule.component';
 import Tag from '../../components/Tag.component';
 
@@ -56,16 +57,16 @@ const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
               </View>
               <View
                 style={{
+                  display: 'flex',
                   flex: 1,
+
                   justifyContent: 'flex-end',
                 }}
               >
-                <Button
-                  title={'Titulo'}
+                <CustomButton
+                  title={'Agendar'}
                   onPress={() => console.log('pressionou')}
-                >
-                  {'Agendar'}
-                </Button>
+                />
               </View>
             </View>
           </View>
