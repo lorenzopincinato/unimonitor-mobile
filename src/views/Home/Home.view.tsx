@@ -9,6 +9,7 @@ import HomeHeaderRight from './HomeHeaderRight.component';
 import Weekday from './Weekday.component';
 
 import colors from '../../styles/colors';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const weekdays = [
   {
@@ -48,6 +49,10 @@ const Home = () => {
 
   const { name, register, email, roles } = route.params;
 
+  function goToSchedule() {
+    navigation.navigate('Schedule');
+  }
+
   return (
     <View style={styles.container}>
       {weekdays.map((weekday, index) => (
@@ -59,6 +64,10 @@ const Home = () => {
           index={index}
         />
       ))}
+      {/* TODO: passar para o Menu */}
+      <TouchableOpacity style={styles.button} onPress={goToSchedule}>
+        <Text style={styles.buttonText}>Horário Monitoria</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -74,6 +83,21 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
 
     height: '100%',
+  },
+  button: {
+    // TODO: passar para o Menu
+    backgroundColor: colors.grey300,
+    height: 36,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    marginVertical: 30,
+  },
+  buttonText: {
+    // TODO: passar para o Menu
+    fontSize: 16,
+    color: colors.white,
   },
 });
 

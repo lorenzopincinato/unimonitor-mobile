@@ -9,6 +9,8 @@ import NoticeBoard from './views/NoticeBoard/NoticeBoard.view';
 import NoticeDetails from './views/NoticeDetails/NoticeDetails.view';
 import NoticeWrite from './views/NoticeWrite/NoticeWrite.view';
 import DebugToken from './views/DebugToken/DebugToken.viuew';
+import Schedule from './views/Schedule/Schedule.view';
+import ScheduleNew from './views/Schedule/ScheduleNew.view';
 
 const Stack = createStackNavigator();
 
@@ -43,10 +45,18 @@ const Routes = () => {
         />
 
         <Stack.Screen
-          name="NoticeWrite"
-          component={NoticeWrite}
+          name="Schedule"
+          component={Schedule}
           options={{
-            title: 'Novo aviso',
+            title: 'Horário da Monitoria',
+          }}
+        />
+
+        <Stack.Screen
+          name="ScheduleNew"
+          component={ScheduleNew}
+          options={{
+            title: 'Novo Horário da Monitoria',
           }}
         />
 
@@ -55,6 +65,14 @@ const Routes = () => {
           component={NoticeBoard}
           options={{
             title: 'Quadro de Avisos',
+          }}
+        />
+
+        <Stack.Screen
+          name="NoticeWrite"
+          component={NoticeWrite}
+          options={{
+            title: 'Novo aviso',
           }}
         />
 

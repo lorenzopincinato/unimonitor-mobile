@@ -54,7 +54,7 @@ const NoticeBoard = () => {
 
               return {
                 ...notice,
-                date: `${getDayMonthAndYear(date)} ás ${getMinutesAndHours(
+                date: `${getDayMonthAndYear(date)} às ${getMinutesAndHours(
                   date,
                 )}`,
                 time: getMinutesAndHours(date),
@@ -113,12 +113,12 @@ const NoticeBoard = () => {
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     backgroundColor: '#F7FAFC',
     height: '100%',
     justifyContent: 'space-between',
   },
   wrapper: {
-    display: 'flex',
     flexDirection: 'column',
 
     paddingHorizontal: 12,

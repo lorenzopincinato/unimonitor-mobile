@@ -12,12 +12,13 @@ import { useNavigation } from '@react-navigation/core';
 
 import { getUserId } from '../../io/asyncStorage';
 import LoadingIndicator from '../../components/LoadingIndicator.component';
+import { ButtonSend } from '../../components/ButtonSend';
 import api from '../../io/api';
 import colors from '../../styles/colors';
 
 const NoticeWrite = () => {
   const [subjects, setSubjects] = useState([]);
-  const [subjectSelected, setSubjectsSelected] = useState<string>();
+  const [subjectSelected, setSubjectSelected] = useState<string>();
   const [title, setTitle] = useState<string>();
   const [body, setBody] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
@@ -54,9 +55,6 @@ const NoticeWrite = () => {
   }
 
   async function handleSend() {
-    console.log(title);
-    console.log(body);
-    console.log(subjectSelected);
     const notice = {
       title: title,
       body: body,
@@ -96,7 +94,7 @@ const NoticeWrite = () => {
         itemStyle={{
           justifyContent: 'flex-start',
         }}
-        onChangeItem={item => setSubjectsSelected(item.value)}
+        onChangeItem={item => setSubjectSelected(item.value)}
       />
       <Text>Assunto:</Text>
       <TextInput
@@ -112,24 +110,18 @@ const NoticeWrite = () => {
         onChangeText={handleBodyInputChange}
       />
 
-      <TouchableOpacity
-        //style={styles.plusButton}
-        activeOpacity={0.7}
-        onPress={handleSend}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Publicar</Text>
-      </TouchableOpacity>
+      <ButtonSend title="Publicar" onPress={handleSend} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: '100%',
-    marginHorizontal: 20,
-    marginVertical: 20,
+    display: 'flex',
+    flexDirection: 'column',
+
+    paddingHorizontal: 12,
+    paddingVertical: 16,
   },
   titleInput: {
     borderWidth: 1,

@@ -1,14 +1,14 @@
-const getWeekdayName = (date: Date) => {
-  const weekdayNames = [
-    'Domingo',
-    'Segunda',
-    'Terça',
-    'Quarta',
-    'Quinta',
-    'Sexta',
-    'Sábado',
-  ];
+const weekdayNames = [
+  'Domingo',
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado',
+];
 
+const getWeekdayName = (date: Date) => {
   return weekdayNames[date.getDay()];
 };
 
@@ -32,6 +32,7 @@ const getMinutesAndHours = (date: Date) => {
 };
 
 export {
+  weekdayNames,
   getWeekdayName,
   getDayAndMonth,
   getDayMonthAndYear,
