@@ -17,9 +17,12 @@ import {
 import api from '../../io/api';
 import colors from '../../styles/colors';
 import MenuButtonHeader from '../../components/MenuButtonHeader';
+import useUserInfo from '../../hooks/useUserInfo';
 
 const NoticeBoard = () => {
   const navigation = useNavigation();
+
+  const { isMonitor, isProfessor } = useUserInfo();
 
   const [weekdays, setWeekdays] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -110,13 +113,15 @@ const NoticeBoard = () => {
         </View>
       ) : null}
 
-      <TouchableOpacity
-        style={styles.plusButton}
-        activeOpacity={0.7}
-        onPress={handleNewNotice}
-      >
-        <AntDesign name="plus" style={styles.plusButtonIcon} />
-      </TouchableOpacity>
+      {isMonitor || isProfessor ? (
+        <TouchableOpacity
+          style={styles.plusButton}
+          activeOpacity={0.7}
+          onPress={handleNewNotice}
+        >
+          <AntDesign name="plus" style={styles.plusButtonIcon} />
+        </TouchableOpacity>
+      ) : null}
     </>
   );
 };

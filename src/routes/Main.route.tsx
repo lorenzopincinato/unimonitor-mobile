@@ -5,10 +5,13 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Schedules from './Schedules.route';
 import Notices from './Notices.route';
 import EditSchedules from './EditSchedules.route';
+import useUserInfo from '../hooks/useUserInfo';
 
 const Drawer = createDrawerNavigator();
 
 const MainRoute = () => {
+  const { isMonitor } = useUserInfo();
+
   return (
     <Drawer.Navigator initialRouteName="Schedules">
       <Drawer.Screen
@@ -21,11 +24,13 @@ const MainRoute = () => {
         component={Notices}
         options={{ title: 'Quadro de Avisos' }}
       />
-      <Drawer.Screen
-        name="EditSchedules"
-        component={EditSchedules}
-        options={{ title: 'Horário das Monitorias' }}
-      />
+      {isMonitor ? (
+        <Drawer.Screen
+          name="EditSchedules"
+          component={EditSchedules}
+          options={{ title: 'Horário das Monitorias' }}
+        />
+      ) : null}
     </Drawer.Navigator>
   );
 };
