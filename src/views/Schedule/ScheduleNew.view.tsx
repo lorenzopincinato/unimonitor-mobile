@@ -62,6 +62,7 @@ const ScheduleNew = ({ route }) => {
         id: monitoringSelected,
       },
     };
+    console.log(schedule);
 
     try {
       await api.post('/schedules', schedule);
@@ -69,16 +70,13 @@ const ScheduleNew = ({ route }) => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.navigate('Schedule');
+            navigation.navigate('All');
           },
         },
       ]);
     } catch (error) {
       console.log(error);
-      Alert.alert(
-        'Horários',
-        'Erro ao publicar horário, tente novamente mais tarde',
-      );
+      Alert.alert('Horários', error.response.data.message);
     }
   }
 

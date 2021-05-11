@@ -37,10 +37,7 @@ const NoticeWrite = () => {
         setIsLoading(false);
       } catch (error) {
         console.log(error);
-        Alert.alert(
-          'Disciplinas',
-          'Erro ao buscar disciplinas, tente novamente mais tarde',
-        );
+        Alert.alert('Disciplinas', error.response.data.message);
         setIsLoading(false);
       }
     })();
@@ -67,16 +64,13 @@ const NoticeWrite = () => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.navigate('NoticeBoard');
+            navigation.navigate('Board');
           },
         },
       ]);
     } catch (error) {
       console.log(error);
-      Alert.alert(
-        'Avisos',
-        'Erro ao publicar aviso, tente novamente mais tarde',
-      );
+      Alert.alert('Avisos', error.response.data.message);
     }
   }
 

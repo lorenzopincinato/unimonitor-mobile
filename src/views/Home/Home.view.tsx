@@ -77,21 +77,6 @@ const styles = StyleSheet.create({
 
     height: '100%',
   },
-  button: {
-    // TODO: passar para o Menu
-    backgroundColor: colors.grey300,
-    height: 36,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    marginVertical: 30,
-  },
-  buttonText: {
-    // TODO: passar para o Menu
-    fontSize: 16,
-    color: colors.white,
-  },
 });
 
 export default Home;
