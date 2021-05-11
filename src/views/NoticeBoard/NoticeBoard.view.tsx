@@ -16,6 +16,7 @@ import {
 
 import api from '../../io/api';
 import colors from '../../styles/colors';
+import MenuButtonHeader from '../../components/MenuButtonHeader';
 
 const NoticeBoard = () => {
   const navigation = useNavigation();
@@ -34,6 +35,15 @@ const NoticeBoard = () => {
 
     return null;
   }, [weekdays, isLoading, error]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      // eslint-disable-next-line react/display-name
+      headerLeft: (props: JSX.IntrinsicAttributes) => (
+        <MenuButtonHeader {...props} />
+      ),
+    });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -74,7 +84,7 @@ const NoticeBoard = () => {
   }, []);
 
   function handleNewNotice() {
-    navigation.navigate('NoticeWrite');
+    navigation.navigate('Write');
   }
 
   return (

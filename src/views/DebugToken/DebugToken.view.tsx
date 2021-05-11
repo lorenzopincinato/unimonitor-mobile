@@ -34,7 +34,10 @@ const DebugToken = () => {
         await setUnimonitorApiToken(token);
         await setUserId(user.id ?? 0);
 
-        navigation.navigate('Home', { ...user });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Main' }],
+        });
       } catch (error) {
         console.log(error);
       }

@@ -13,7 +13,7 @@ const HomeHeaderRight = () => {
         title="notice board"
         iconName="notifications"
         color="white"
-        onPress={() => navigation.navigate('NoticeBoard')}
+        onPress={() => navigation.navigate('Notices')}
       />
     </HeaderButtons>
   );

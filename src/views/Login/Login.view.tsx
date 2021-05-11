@@ -42,7 +42,10 @@ export default function Login({ navigation }) {
       if (user && token) {
         await setUnimonitorApiToken(token);
         await setUserId(user.id ?? 0);
-        navigation.navigate('Home', { ...user });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Main' }],
+        });
       }
     })();
   }, [user, token]);

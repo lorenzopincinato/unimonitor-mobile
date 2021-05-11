@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 const Notice = ({ navigation, index, length, notice }) => {
   const openNoticeDetails = () => {
-    navigation.navigate('NoticeDetails', { notice });
+    navigation.navigate('Details', { notice });
   };
 
   return (

@@ -9,6 +9,7 @@ import LoadingIndicator from '../../components/LoadingIndicator.component';
 import { getUserId } from '../../io/asyncStorage';
 import api from '../../io/api';
 import colors from '../../styles/colors';
+import MenuButtonHeader from '../../components/MenuButtonHeader';
 
 const Schedule = () => {
   const [monitorings, setMonitorings] = useState([]);
@@ -16,6 +17,15 @@ const Schedule = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      // eslint-disable-next-line react/display-name
+      headerLeft: (props: JSX.IntrinsicAttributes) => (
+        <MenuButtonHeader {...props} />
+      ),
+    });
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -39,7 +49,7 @@ const Schedule = () => {
   }, []);
 
   function handleNewSchedule() {
-    navigation.navigate('ScheduleNew', { monitoringSelected });
+    navigation.navigate('New', { monitoringSelected });
   }
 
   return (

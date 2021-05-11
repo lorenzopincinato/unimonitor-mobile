@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/core';
 
 import { getWeekdayName, getDayAndMonth } from '../../utils/date';
 
-import HomeHeaderLeft from './HomeHeaderLeft.component';
+import MenuButtonHeader from '../../components/MenuButtonHeader';
 import HomeHeaderRight from './HomeHeaderRight.component';
 import Weekday from './Weekday.component';
 
-import colors from '../../styles/colors';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import WeekdaySelection from './WeekSelection.component';
+
+import colors from '../../styles/colors';
 
 const weekdays = [
   {
@@ -33,7 +33,6 @@ const weekdays = [
 
 const Home = () => {
   const navigation = useNavigation();
-  const route = useRoute();
 
   useEffect(() => {
     navigation.setOptions({
@@ -43,16 +42,10 @@ const Home = () => {
       ),
       // eslint-disable-next-line react/display-name
       headerLeft: (props: JSX.IntrinsicAttributes) => (
-        <HomeHeaderLeft {...props} />
+        <MenuButtonHeader {...props} />
       ),
     });
   }, []);
-
-  const { name, register, email, roles } = route.params;
-
-  function goToSchedule() {
-    navigation.navigate('Schedule');
-  }
 
   return (
     <View>
@@ -68,11 +61,6 @@ const Home = () => {
           />
         ))}
       </View>
-
-      {/* TODO: passar para o Menu */}
-      <TouchableOpacity style={styles.button} onPress={goToSchedule}>
-        <Text style={styles.buttonText}>Horário Monitoria</Text>
-      </TouchableOpacity>
     </View>
   );
 };
