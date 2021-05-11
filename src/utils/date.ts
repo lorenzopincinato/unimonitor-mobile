@@ -31,10 +31,36 @@ const getMinutesAndHours = (date: Date) => {
     .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 };
 
+const getLastMonday = (date: Date) => {
+  const lastMonday = new Date(date);
+  lastMonday.setDate(lastMonday.getDate() - ((lastMonday.getDay() + 6) % 7));
+
+  return lastMonday;
+};
+
+const getNextSaturday = (date: Date) => {
+  const nextSaturday = new Date(date);
+  nextSaturday.setDate(
+    nextSaturday.getDate() + ((13 - nextSaturday.getDay()) % 7),
+  );
+
+  return nextSaturday;
+};
+
+const addDays = (date: Date, days: number) => {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() + days);
+
+  return newDate;
+};
+
 export {
   weekdayNames,
   getWeekdayName,
   getDayAndMonth,
   getDayMonthAndYear,
   getMinutesAndHours,
+  getLastMonday,
+  getNextSaturday,
+  addDays,
 };

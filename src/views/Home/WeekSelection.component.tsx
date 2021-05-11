@@ -3,12 +3,37 @@ import { StyleSheet, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import colors from '../../styles/colors';
+import { getDayAndMonth } from '../../utils/date';
 
-const WeekdaySelection: FC = () => (
+type WeekdaySelecioProps = {
+  onPressPrevious: () => void;
+  onPressNext: () => void;
+  weekBeginDate: Date;
+  weekEndDate: Date;
+};
+
+const WeekdaySelection: FC<WeekdaySelecioProps> = ({
+  onPressPrevious,
+  onPressNext,
+  weekBeginDate,
+  weekEndDate,
+}) => (
   <View style={styles.container}>
-    <AntDesign name="caretleft" size={20} color={colors.white} />
-    <Text style={styles.text}>{`Semana de 09/03 a 15/03`}</Text>
-    <AntDesign name="caretright" size={20} color={colors.white} />
+    <AntDesign
+      name="caretleft"
+      size={20}
+      color={colors.white}
+      onPress={onPressPrevious}
+    />
+    <Text style={styles.text}>{`Semana de ${getDayAndMonth(
+      weekBeginDate,
+    )} a ${getDayAndMonth(weekEndDate)}`}</Text>
+    <AntDesign
+      name="caretright"
+      size={20}
+      color={colors.white}
+      onPress={onPressNext}
+    />
   </View>
 );
 

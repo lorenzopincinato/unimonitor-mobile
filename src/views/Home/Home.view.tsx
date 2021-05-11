@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
-import { getWeekdayName, getDayAndMonth } from '../../utils/date';
+import {
+  getWeekdayName,
+  getDayAndMonth,
+  getLastMonday,
+  getNextSaturday,
+  addDays,
+} from '../../utils/date';
 
 import MenuButtonHeader from '../../components/MenuButtonHeader';
 import HomeHeaderRight from './HomeHeaderRight.component';
@@ -47,9 +53,27 @@ const Home = () => {
     });
   }, []);
 
+  const [weekBeginDate, setWeekBeginDate] = useState(getLastMonday(new Date()));
+  const [weekEndDate, setWeekEndDate] = useState(getNextSaturday(new Date()));
+
+  const nextWeek = useCallback(() => {
+    setWeekBeginDate(addDays(weekBeginDate, 7));
+    setWeekEndDate(addDays(weekEndDate, 7));
+  }, [setWeekBeginDate, weekBeginDate]);
+
+  const previousWeek = useCallback(() => {
+    setWeekBeginDate(addDays(weekBeginDate, -7));
+    setWeekEndDate(addDays(weekEndDate, -7));
+  }, [setWeekBeginDate, weekBeginDate]);
+
   return (
     <View>
-      <WeekdaySelection />
+      <WeekdaySelection
+        onPressNext={nextWeek}
+        onPressPrevious={previousWeek}
+        weekBeginDate={weekBeginDate}
+        weekEndDate={weekEndDate}
+      />
       <View style={styles.container}>
         {weekdays.map((weekday, index) => (
           <Weekday
@@ -76,21 +100,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
 
     height: '100%',
-  },
-  button: {
-    // TODO: passar para o Menu
-    backgroundColor: colors.grey300,
-    height: 36,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 80,
-    marginVertical: 30,
-  },
-  buttonText: {
-    // TODO: passar para o Menu
-    fontSize: 16,
-    color: colors.white,
   },
 });
 
