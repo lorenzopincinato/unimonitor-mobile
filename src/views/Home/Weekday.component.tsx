@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { getDayAndMonth, getWeekdayName } from '../../utils/date';
 import Schedule from './Schedule.component';
 
 type WeekdayProps = {
   index: number;
-  name: string;
-  date: string;
+  date: Date;
   schedules: any;
 };
 
-const Weekday: FC<WeekdayProps> = ({ index, name, date, schedules }) => {
+const Weekday: FC<WeekdayProps> = ({ index, date, schedules }) => {
   const getHeaderStyle = (index: number) => {
     if (index === 0) {
       return StyleSheet.compose(styles.header, styles.headerFirst);
@@ -21,8 +21,8 @@ const Weekday: FC<WeekdayProps> = ({ index, name, date, schedules }) => {
   return (
     <View>
       <View style={getHeaderStyle(index)}>
-        <Text style={styles.headerText}>{name}</Text>
-        <Text style={styles.headerText}>{date}</Text>
+        <Text style={styles.headerText}>{getWeekdayName(date)}</Text>
+        <Text style={styles.headerText}>{getDayAndMonth(date)}</Text>
       </View>
       {schedules.map((schedule, index) => (
         <Schedule
@@ -30,7 +30,9 @@ const Weekday: FC<WeekdayProps> = ({ index, name, date, schedules }) => {
           index={index}
           begin={schedule.begin}
           end={schedule.end}
-          subject={schedule.subject}
+          status={schedule.status}
+          monitoring={schedule.monitoring}
+          appointments={schedule.appointments}
         />
       ))}
     </View>

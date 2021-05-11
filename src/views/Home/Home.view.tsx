@@ -7,6 +7,7 @@ import {
   getDayAndMonth,
   getLastMonday,
   getNextSaturday,
+  getIsoDate,
   addDays,
 } from '../../utils/date';
 
@@ -17,6 +18,7 @@ import Weekday from './Weekday.component';
 import WeekdaySelection from './WeekSelection.component';
 
 import colors from '../../styles/colors';
+import api from '../../io/api';
 
 const weekdays = [
   {
@@ -59,12 +61,28 @@ const Home = () => {
   const nextWeek = useCallback(() => {
     setWeekBeginDate(addDays(weekBeginDate, 7));
     setWeekEndDate(addDays(weekEndDate, 7));
+    setWeekdays([]);
   }, [setWeekBeginDate, weekBeginDate]);
 
   const previousWeek = useCallback(() => {
     setWeekBeginDate(addDays(weekBeginDate, -7));
     setWeekEndDate(addDays(weekEndDate, -7));
+    setWeekdays([]);
   }, [setWeekBeginDate, weekBeginDate]);
+
+  const [weekdays, setWeekdays] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.get(
+        `schedules?begin=${getIsoDate(weekBeginDate)}&end=${getIsoDate(
+          weekEndDate,
+        )}`,
+      );
+
+      setWeekdays(response.data);
+    })();
+  }, [weekBeginDate, weekEndDate]);
 
   return (
     <View>
@@ -78,8 +96,7 @@ const Home = () => {
         {weekdays.map((weekday, index) => (
           <Weekday
             key={`weekday-${weekday.date}`}
-            name={weekday.name}
-            date={weekday.date}
+            date={new Date(weekday.date)}
             schedules={weekday.schedules}
             index={index}
           />

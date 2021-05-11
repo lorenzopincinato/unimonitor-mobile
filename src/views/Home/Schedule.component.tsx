@@ -5,17 +5,65 @@ import HorizontalRule from '../../components/HorizontalRule.component';
 import Tag from '../../components/Tag.component';
 
 import colors from '../../styles/colors';
+import { getMinutesAndHours } from '../../utils/date';
 
 type ScheduleProps = {
   index: number;
   begin: string;
   end: string;
-  subject: {
-    name: string;
+  status: string;
+  monitoring: {
+    subject: { name: string };
+    monitor: { name: string };
   };
+  appointments: {
+    id: number;
+    begin: string;
+    end: string;
+  }[];
 };
 
-const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
+const translateStatus = (status: string) => {
+  switch (status) {
+    case 'available':
+      return 'Disponível';
+    case 'unavailable':
+      return 'Indisponível';
+    case 'past':
+      return 'Passada';
+    case 'booked':
+      return 'Agendada';
+    case 'withBooking':
+      return 'Com Agendamento';
+    default:
+      return '';
+  }
+};
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'available':
+      return colors.green;
+    case 'unavailable':
+      return colors.red;
+    case 'past':
+      return colors.orange;
+    case 'booked':
+    case 'withBooking':
+      return colors.secondaryBlue;
+    default:
+      return colors.primaryBlue;
+  }
+};
+
+const Schedule: FC<ScheduleProps> = ({
+  index,
+  begin,
+  end,
+  monitoring,
+  appointments,
+  status,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -26,10 +74,10 @@ const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
     <TouchableOpacity style={styles.scheduleContainer} onPress={toggleOpen}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.subjectName}>{subject.name}</Text>
+          <Text style={styles.subjectName}>{monitoring.subject.name}</Text>
           <Text>{`${begin} - ${end}`}</Text>
         </View>
-        <Tag variant={'test'}>{'disponível'}</Tag>
+        <Tag color={getStatusColor(status)}>{translateStatus(status)}</Tag>
       </View>
       {isOpen ? (
         <>
@@ -37,7 +85,7 @@ const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
           <View style={styles.details}>
             <View style={styles.inlineContent}>
               <Text style={styles.boldSmallText}>{'Monitor: '}</Text>
-              <Text style={styles.smallText}>{'Nome do Monitor'}</Text>
+              <Text style={styles.smallText}>{monitoring.monitor.name}</Text>
             </View>
             <View style={styles.inlineContent}>
               <Text style={styles.boldSmallText}>{'Local: '}</Text>
@@ -48,12 +96,16 @@ const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
             >
               <View>
                 <Text style={styles.boldSmallText}>{'Horários: '}</Text>
-                <Text style={{ ...styles.smallText, paddingTop: 4 }}>
-                  {'19:00 - 20:00'}
-                </Text>
-                <Text style={{ ...styles.smallText, paddingTop: 4 }}>
-                  {'20:30 - 21:00'}
-                </Text>
+                {appointments.map(appointment => (
+                  <Text
+                    key={`appointment-${monitoring.subject.name}-${appointment.begin}`}
+                    style={{ ...styles.smallText, paddingTop: 4 }}
+                  >
+                    {`${getMinutesAndHours(
+                      new Date(appointment.begin),
+                    )} - ${getMinutesAndHours(new Date(appointment.end))}`}
+                  </Text>
+                ))}
               </View>
               <View
                 style={{
@@ -63,10 +115,12 @@ const Schedule: FC<ScheduleProps> = ({ index, begin, end, subject }) => {
                   justifyContent: 'flex-end',
                 }}
               >
-                <CustomButton
-                  title={'Agendar'}
-                  onPress={() => console.log('pressionou')}
-                />
+                {status === 'available' || status === 'booked' ? (
+                  <CustomButton
+                    title={status === 'booked' ? 'Alterar' : 'Agendar'}
+                    onPress={() => console.log('pressionou')}
+                  />
+                ) : null}
               </View>
             </View>
           </View>

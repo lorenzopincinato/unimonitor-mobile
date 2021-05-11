@@ -54,6 +54,10 @@ const addDays = (date: Date, days: number) => {
   return newDate;
 };
 
+const getIsoDate = (date: Date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
+
 export {
   weekdayNames,
   getWeekdayName,
@@ -63,4 +67,5 @@ export {
   getLastMonday,
   getNextSaturday,
   addDays,
+  getIsoDate,
 };

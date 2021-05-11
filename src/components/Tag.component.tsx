@@ -4,11 +4,11 @@ import { Text, View, StyleSheet } from 'react-native';
 import colors from '../styles/colors';
 
 type TagProps = {
-  variant: string;
+  color: string;
 };
 
-const Tag: FC<TagProps> = ({ variant, children }) => (
-  <View style={styles.tag}>
+const Tag: FC<TagProps> = ({ color, children }) => (
+  <View style={{ ...styles.tag, backgroundColor: color }}>
     <Text style={styles.text}>{children}</Text>
   </View>
 );
@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 4,
     borderRadius: 2,
-
-    backgroundColor: colors.primaryBlue,
   },
   text: {
     color: colors.white,
