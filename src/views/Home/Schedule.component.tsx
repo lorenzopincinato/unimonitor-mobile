@@ -6,12 +6,16 @@ import Tag from '../../components/Tag.component';
 
 import colors from '../../styles/colors';
 import { getMinutesAndHours } from '../../utils/date';
+import { useNavigation } from '@react-navigation/native';
+import useUserInfo from '../../hooks/useUserInfo';
 
 type ScheduleProps = {
+  id: string;
   index: number;
   begin: string;
   end: string;
   status: string;
+  date: Date;
   monitoring: {
     subject: { name: string };
     monitor: { name: string };
@@ -58,13 +62,19 @@ const getStatusColor = (status: string) => {
 
 const Schedule: FC<ScheduleProps> = ({
   index,
+  id,
   begin,
   end,
   monitoring,
   appointments,
   status,
+  date,
 }) => {
+  const navigation = useNavigation();
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const { isProfessor } = useUserInfo();
 
   const toggleOpen = useCallback(() => {
     setIsOpen(!isOpen);
@@ -103,7 +113,9 @@ const Schedule: FC<ScheduleProps> = ({
                   >
                     {`${getMinutesAndHours(
                       new Date(appointment.begin),
-                    )} - ${getMinutesAndHours(new Date(appointment.end))}`}
+                    )} - ${getMinutesAndHours(new Date(appointment.end))}${
+                      isProfessor ? ` - ${appointment.student.name}` : ''
+                    }`}
                   </Text>
                 ))}
               </View>
@@ -115,10 +127,18 @@ const Schedule: FC<ScheduleProps> = ({
                   justifyContent: 'flex-end',
                 }}
               >
-                {status === 'available' || status === 'booked' ? (
+                {(status === 'available' || status === 'booked') &&
+                !isProfessor ? (
                   <CustomButton
                     title={status === 'booked' ? 'Alterar' : 'Agendar'}
-                    onPress={() => console.log('pressionou')}
+                    onPress={() =>
+                      navigation.navigate('Appointments', {
+                        appointments,
+                        monitoring,
+                        date: date.toString(),
+                        scheduleId: id,
+                      })
+                    }
                   />
                 ) : null}
               </View>

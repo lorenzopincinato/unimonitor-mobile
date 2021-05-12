@@ -20,25 +20,6 @@ import WeekdaySelection from './WeekSelection.component';
 import colors from '../../styles/colors';
 import api from '../../io/api';
 
-const weekdays = [
-  {
-    name: getWeekdayName(new Date('2021-05-03')),
-    date: getDayAndMonth(new Date('2021-05-03')),
-    schedules: [
-      {
-        id: 1,
-        begin: '17:00',
-        end: '19:00',
-        status: 'available',
-        subject: {
-          id: 1,
-          name: 'Banco de Dados A',
-        },
-      },
-    ],
-  },
-];
-
 const Home = () => {
   const navigation = useNavigation();
 

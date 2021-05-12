@@ -58,6 +58,10 @@ const getIsoDate = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
+const getIsoDateTime = (date: Date) => {
+  return `${getIsoDate(date)}T${getMinutesAndHours(date)}`;
+};
+
 export {
   weekdayNames,
   getWeekdayName,
@@ -68,4 +72,5 @@ export {
   getNextSaturday,
   addDays,
   getIsoDate,
+  getIsoDateTime,
 };

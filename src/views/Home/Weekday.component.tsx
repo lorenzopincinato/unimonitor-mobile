@@ -26,6 +26,7 @@ const Weekday: FC<WeekdayProps> = ({ index, date, schedules }) => {
       </View>
       {schedules.map((schedule, index) => (
         <Schedule
+          id={schedule.id}
           key={`schedule-${schedule.id}`}
           index={index}
           begin={schedule.begin}
@@ -33,6 +34,7 @@ const Weekday: FC<WeekdayProps> = ({ index, date, schedules }) => {
           status={schedule.status}
           monitoring={schedule.monitoring}
           appointments={schedule.appointments}
+          date={date}
         />
       ))}
     </View>
