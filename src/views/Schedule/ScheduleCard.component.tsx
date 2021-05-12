@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
 
 type ScheduleCardProps = {
-  index: number;
   begin: string;
   end: string;
-  subject: {
-    name: string;
-  };
+  weekday: string; //FIXME: deve ser array
 };
 
-const ScheduleCard = () => {
+const ScheduleCard: FC<ScheduleCardProps> = ({ begin, end, weekday }) => {
   return (
     <View style={styles.container}>
-      <Text>a</Text>
+      <Text>{begin}</Text>
+      <Text>{end}</Text>
+      <Text>{weekday}</Text>
     </View>
   );
 };
@@ -25,8 +24,6 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 12,
     paddingVertical: 16,
-
-    height: '100%',
   },
 });
 

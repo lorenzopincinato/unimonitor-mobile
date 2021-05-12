@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Alert,
+  FlatList,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/core';
 
@@ -10,11 +17,13 @@ import { getUserId } from '../../io/asyncStorage';
 import api from '../../io/api';
 import colors from '../../styles/colors';
 import MenuButtonHeader from '../../components/MenuButtonHeader';
+import ScheduleCard from './ScheduleCard.component';
 
 const Schedule = () => {
   const [monitorings, setMonitorings] = useState([]);
-  const [monitoringSelected, setMonitoringSelected] = useState<string>();
+  const [monitoringIdSelected, setMonitoringIdSelected] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
+  const [schedules, setSchedules] = useState([]);
 
   const navigation = useNavigation();
 
@@ -32,25 +41,49 @@ const Schedule = () => {
       try {
         setIsLoading(true);
 
-        const userId = await getUserId(); //TODO use to filter the monitorings
-        const monitoringsApi = await api.get(`/monitorings`);
+        const userId = await getUserId();
+        const monitoringsApi = await api.get(
+          `/monitorings?monitorId=${userId}`,
+        );
         setMonitorings(monitoringsApi.data);
 
         setIsLoading(false);
       } catch (error) {
         console.log(error);
-        Alert.alert(
-          'Disciplinas',
-          'Erro ao buscar monitorias, tente novamente mais tarde',
-        );
+        Alert.alert('Disciplinas', error.response.data.message);
         setIsLoading(false);
       }
     })();
   }, []);
 
   function handleNewSchedule() {
-    navigation.navigate('New', { monitoringSelected });
+    navigation.navigate('New', { monitoringSelected: monitoringIdSelected });
   }
+
+  useEffect(() => {
+    if (monitoringIdSelected) {
+      (async () => {
+        try {
+          setIsLoading(true);
+
+          const schedulesApi = await api.get(
+            `/schedules?monitoringId=${monitoringIdSelected}`,
+          );
+          setSchedules(schedulesApi.data);
+
+          setIsLoading(false);
+        } catch (error) {
+          console.log(error);
+          Alert.alert('Horários', error.response.data.message);
+          setIsLoading(false);
+        }
+      })();
+    }
+  }, [monitoringIdSelected]);
+
+  useEffect(() => {
+    console.log(schedules);
+  }, [schedules]);
 
   return (
     <View style={styles.container}>
@@ -66,7 +99,7 @@ const Schedule = () => {
         itemStyle={{
           justifyContent: 'flex-start',
         }}
-        onChangeItem={item => setMonitoringSelected(item.value)}
+        onChangeItem={item => setMonitoringIdSelected(item.value)}
       />
 
       <TouchableOpacity
@@ -76,6 +109,15 @@ const Schedule = () => {
       >
         <AntDesign name="plus" style={styles.plusButtonIcon} />
       </TouchableOpacity>
+
+      {schedules.map(schedule => (
+        <ScheduleCard
+          key={`schedule-${schedule.id}`}
+          begin={schedule.begin}
+          end={schedule.end}
+          weekday={schedule.weekday}
+        />
+      ))}
     </View>
   );
 };
