@@ -81,34 +81,34 @@ const Schedule = () => {
     }
   }, [monitoringIdSelected]);
 
-  useEffect(() => {
-    console.log(schedules);
-  }, [schedules]);
-
   return (
     <View style={styles.container}>
       {isLoading ? <LoadingIndicator /> : null}
 
-      <Text>Monitoria:</Text>
+      <Text style={styles.monitoringText}>Monitoria:</Text>
+
       <DropDownPicker
         items={monitorings.map(monitoring => ({
           label: monitoring.subject.name + ' - ' + monitoring.monitor.name,
           value: monitoring.id,
         }))}
-        containerStyle={{ height: 40 }}
+        containerStyle={{ height: 45 }}
         itemStyle={{
           justifyContent: 'flex-start',
         }}
         onChangeItem={item => setMonitoringIdSelected(item.value)}
+        // defaultValue={monitorings[0]}
       />
 
-      <TouchableOpacity
-        style={styles.plusButton}
-        activeOpacity={0.7}
-        onPress={handleNewSchedule}
-      >
-        <AntDesign name="plus" style={styles.plusButtonIcon} />
-      </TouchableOpacity>
+      <View style={styles.plusButtonView}>
+        <TouchableOpacity
+          style={styles.plusButton}
+          activeOpacity={0.7}
+          onPress={handleNewSchedule}
+        >
+          <AntDesign name="plus" style={styles.plusButtonIcon} />
+        </TouchableOpacity>
+      </View>
 
       {schedules.map(schedule => (
         <ScheduleCard
@@ -132,11 +132,21 @@ const styles = StyleSheet.create({
 
     height: '100%',
   },
+  monitoringText: {
+    marginTop: 12,
+    marginBottom: 6,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  plusButtonView: {
+    alignItems: 'flex-end',
+  },
   plusButton: {
     backgroundColor: colors.primaryBlue,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 28,
+    marginTop: 70,
     marginBottom: 10,
     height: 46,
     width: 46,

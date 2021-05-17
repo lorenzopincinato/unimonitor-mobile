@@ -114,13 +114,15 @@ const NoticeBoard = () => {
       ) : null}
 
       {isMonitor || isProfessor ? (
-        <TouchableOpacity
-          style={styles.plusButton}
-          activeOpacity={0.7}
-          onPress={handleNewNotice}
-        >
-          <AntDesign name="plus" style={styles.plusButtonIcon} />
-        </TouchableOpacity>
+        <View style={styles.plusButtonView}>
+          <TouchableOpacity
+            style={styles.plusButton}
+            activeOpacity={0.7}
+            onPress={handleNewNotice}
+          >
+            <AntDesign name="plus" style={styles.plusButtonIcon} />
+          </TouchableOpacity>
+        </View>
       ) : null}
     </>
   );
@@ -138,6 +140,10 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 12,
     paddingVertical: 16,
+  },
+  plusButtonView: {
+    alignItems: 'flex-end',
+    paddingHorizontal: 12,
   },
   plusButton: {
     backgroundColor: colors.primaryBlue,
