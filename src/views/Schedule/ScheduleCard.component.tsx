@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import React, { FC } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
@@ -13,14 +12,12 @@ const ScheduleCard: FC<ScheduleCardProps> = ({ begin, end, weekday }) => {
   return (
     <View style={styles.container}>
       <View style={styles.groupHour}>
-        {/* <Text>{`${format(new Date(begin), 'HH:mm')}`}</Text> */}
-        <Text style={styles.hour}>{begin}</Text>
+        <Text style={styles.hour}>{begin.slice(0, -3)}</Text>
         <Text style={styles.hourText}>Início</Text>
       </View>
 
       <View style={styles.groupHour}>
-        {/* <Text>{`${format(new Date(end), 'HH:mm')}`}</Text> */}
-        <Text style={styles.hour}>{end}</Text>
+        <Text style={styles.hour}>{end.slice(0, -3)}</Text>
         <Text style={styles.hourText}>Fim</Text>
       </View>
 
