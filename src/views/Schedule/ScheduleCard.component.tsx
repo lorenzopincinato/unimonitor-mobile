@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
-import React, { FC, useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
+import React, { FC } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import colors from '../../styles/colors';
 
 type ScheduleCardProps = {
@@ -12,13 +12,21 @@ type ScheduleCardProps = {
 const ScheduleCard: FC<ScheduleCardProps> = ({ begin, end, weekday }) => {
   return (
     <View style={styles.container}>
-      {/* <Text>{`${format(new Date(begin), 'HH:mm')}`}</Text> */}
-      <Text>{begin}</Text>
+      <View style={styles.groupHour}>
+        {/* <Text>{`${format(new Date(begin), 'HH:mm')}`}</Text> */}
+        <Text style={styles.hour}>{begin}</Text>
+        <Text style={styles.hourText}>Início</Text>
+      </View>
 
-      {/* <Text>{`${format(new Date(end), 'HH:mm')}`}</Text> */}
-      <Text>{end}</Text>
+      <View style={styles.groupHour}>
+        {/* <Text>{`${format(new Date(end), 'HH:mm')}`}</Text> */}
+        <Text style={styles.hour}>{end}</Text>
+        <Text style={styles.hourText}>Fim</Text>
+      </View>
 
-      <Text>{weekday}</Text>
+      <View style={styles.groupWeekday}>
+        <Text style={styles.weekday}>{weekday}</Text>
+      </View>
     </View>
   );
 };
@@ -26,7 +34,7 @@ const ScheduleCard: FC<ScheduleCardProps> = ({ begin, end, weekday }) => {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
 
     paddingHorizontal: 12,
     paddingVertical: 16,
@@ -34,6 +42,28 @@ const styles = StyleSheet.create({
 
     backgroundColor: colors.grey300,
     borderRadius: 15,
+    height: 85,
+  },
+  groupHour: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginLeft: 15,
+  },
+  hour: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  hourText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  groupWeekday: {
+    marginLeft: 65,
+    justifyContent: 'center',
+  },
+  weekday: {
+    fontSize: 18,
+    textAlign: 'center',
   },
 });
 
