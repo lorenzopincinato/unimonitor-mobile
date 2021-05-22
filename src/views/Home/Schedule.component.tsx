@@ -114,7 +114,9 @@ const Schedule: FC<ScheduleProps> = ({
                     {`${getMinutesAndHours(
                       new Date(appointment.begin),
                     )} - ${getMinutesAndHours(new Date(appointment.end))}${
-                      isProfessor ? ` - ${appointment.student.name}` : ''
+                      isProfessor && appointment?.student?.name
+                        ? ` - ${appointment?.student?.name}`
+                        : ''
                     }`}
                   </Text>
                 ))}
