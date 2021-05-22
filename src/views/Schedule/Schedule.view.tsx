@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  Alert,
-  FlatList,
-} from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/core';
 
@@ -24,6 +17,7 @@ const Schedule = () => {
   const [monitoringIdSelected, setMonitoringIdSelected] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
   const [schedules, setSchedules] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const navigation = useNavigation();
 
@@ -46,6 +40,7 @@ const Schedule = () => {
           `/monitorings?monitorId=${userId}`,
         );
         setMonitorings(monitoringsApi.data);
+        setMonitoringIdSelected(monitoringsApi.data[0].id);
 
         setIsLoading(false);
       } catch (error) {
@@ -96,8 +91,10 @@ const Schedule = () => {
         itemStyle={{
           justifyContent: 'flex-start',
         }}
-        onChangeItem={item => setMonitoringIdSelected(item.value)}
-        // defaultValue={monitorings[0]}
+        setValue={setMonitoringIdSelected}
+        value={monitoringIdSelected}
+        open={open}
+        setOpen={setOpen}
       />
 
       <View style={styles.plusButtonView}>

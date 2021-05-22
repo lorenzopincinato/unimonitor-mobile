@@ -10,6 +10,7 @@ import { weekdayNames, getMinutesAndHours } from '../../utils/date';
 import { ButtonSend } from '../../components/ButtonSend';
 import api from '../../io/api';
 import colors from '../../styles/colors';
+import { useEffect } from 'react';
 
 const ScheduleNew = ({ route }) => {
   const [weekdayName, setWeekdayName] = useState<string>();
@@ -17,9 +18,14 @@ const ScheduleNew = ({ route }) => {
   const [hourEnd, setHourEnd] = useState(new Date());
   const [showDatePikerBegin, setShowDatePikerBegin] = useState(false);
   const [showDatePikerEnd, setShowDatePikerEnd] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const { monitoringSelected } = route.params;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setWeekdayName(weekdayNames[1]);
+  }, []);
 
   function handleChangeTimeBegin(event: Event, dateTime: Date | undefined) {
     setShowDatePikerBegin(oldState => !oldState);
@@ -85,8 +91,10 @@ const ScheduleNew = ({ route }) => {
         itemStyle={{
           justifyContent: 'flex-start',
         }}
-        onChangeItem={item => setWeekdayName(item.value)}
-        defaultValue={weekdayNames[0]}
+        setValue={setWeekdayName}
+        value={weekdayName}
+        open={open}
+        setOpen={setOpen}
       />
 
       <Text style={styles.hourText}>Hora de início:</Text>
