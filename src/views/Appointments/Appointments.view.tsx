@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { getDayAndMonth, getWeekdayName } from '../../utils/date';
 import Appointment from './Appointment.component';
 
@@ -8,31 +9,37 @@ const Appointments = ({ route }) => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{getWeekdayName(new Date(date))}</Text>
-        <Text style={styles.headerText}>{getDayAndMonth(new Date(date))}</Text>
-      </View>
-      <Text style={styles.subjectName}>{monitoring.subject.name}</Text>
-      <View style={styles.details}>
-        <View style={styles.inlineContent}>
-          <Text style={styles.boldSmallText}>{'Monitor: '}</Text>
-          <Text style={styles.smallText}>{monitoring.monitor.name}</Text>
+      <ScrollView style={styles.scrollWrapper}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>
+            {getWeekdayName(new Date(date))}
+          </Text>
+          <Text style={styles.headerText}>
+            {getDayAndMonth(new Date(date))}
+          </Text>
         </View>
-        <View style={styles.inlineContent}>
-          <Text style={styles.boldSmallText}>{'Local: '}</Text>
-          <Text style={styles.smallText}>{'Local da Monitoria'}</Text>
+        <Text style={styles.subjectName}>{monitoring.subject.name}</Text>
+        <View style={styles.details}>
+          <View style={styles.inlineContent}>
+            <Text style={styles.boldSmallText}>{'Monitor: '}</Text>
+            <Text style={styles.smallText}>{monitoring.monitor.name}</Text>
+          </View>
+          <View style={styles.inlineContent}>
+            <Text style={styles.boldSmallText}>{'Local: '}</Text>
+            <Text style={styles.smallText}>{'Local da Monitoria'}</Text>
+          </View>
         </View>
-      </View>
-      {appointments.map(appointment => (
-        <Appointment
-          key={appointment.begin}
-          begin={appointment.begin}
-          end={appointment.end}
-          status={appointment.status}
-          id={appointment.id}
-          scheduleId={scheduleId}
-        />
-      ))}
+        {appointments.map(appointment => (
+          <Appointment
+            key={appointment.begin}
+            begin={appointment.begin}
+            end={appointment.end}
+            status={appointment.status}
+            id={appointment.id}
+            scheduleId={scheduleId}
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -42,15 +49,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
 
-    padding: 12,
-
     backgroundColor: '#F7FAFC',
     height: '100%',
+  },
+  scrollWrapper: {
+    paddingHorizontal: 12,
   },
   header: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+
+    marginTop: 12,
   },
   headerText: {
     fontSize: 20,
@@ -69,6 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
 
     width: '100%',
+
+    marginBottom: 12,
   },
   inlineContent: {
     display: 'flex',
