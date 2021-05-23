@@ -11,7 +11,6 @@ import useUserInfo from '../../hooks/useUserInfo';
 
 type ScheduleProps = {
   id: string;
-  index: number;
   begin: string;
   end: string;
   status: string;
@@ -61,7 +60,6 @@ const getStatusColor = (status: string) => {
 };
 
 const Schedule: FC<ScheduleProps> = ({
-  index,
   id,
   begin,
   end,
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
 
-    marginTop: 12,
+    marginBottom: 12,
 
     padding: 8,
 

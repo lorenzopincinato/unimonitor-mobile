@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import {
@@ -73,7 +73,7 @@ const Home = () => {
         weekBeginDate={weekBeginDate}
         weekEndDate={weekEndDate}
       />
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {weekdays.map((weekday, index) => (
           <Weekday
             key={`weekday-${weekday.date}`}
@@ -82,7 +82,7 @@ const Home = () => {
             index={index}
           />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
