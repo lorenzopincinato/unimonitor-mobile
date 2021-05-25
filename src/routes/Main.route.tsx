@@ -25,11 +25,6 @@ const MainRoute = () => {
         component={Notices}
         options={{ title: 'Quadro de Avisos' }}
       />
-      <Drawer.Screen
-        name="Logout"
-        component={Logout}
-        options={{ title: 'Sair' }}
-      />
       {isMonitor ? (
         <Drawer.Screen
           name="EditSchedules"
@@ -37,6 +32,11 @@ const MainRoute = () => {
           options={{ title: 'Horário das Monitorias' }}
         />
       ) : null}
+      <Drawer.Screen
+        name="Logout"
+        component={Logout}
+        options={{ title: 'Sair' }}
+      />
     </Drawer.Navigator>
   );
 };

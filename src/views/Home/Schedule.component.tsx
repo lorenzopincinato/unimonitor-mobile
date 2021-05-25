@@ -5,7 +5,7 @@ import HorizontalRule from '../../components/HorizontalRule.component';
 import Tag from '../../components/Tag.component';
 
 import colors from '../../styles/colors';
-import { getMinutesAndHours } from '../../utils/date';
+import { getLocalTzDate, getMinutesAndHours } from '../../utils/date';
 import { useNavigation } from '@react-navigation/native';
 import useUserInfo from '../../hooks/useUserInfo';
 
@@ -83,7 +83,7 @@ const Schedule: FC<ScheduleProps> = ({
       <View style={styles.header}>
         <View>
           <Text style={styles.subjectName}>{monitoring.subject.name}</Text>
-          <Text>{`${begin} - ${end}`}</Text>
+          <Text>{`${begin.slice(0, -3)} - ${end.slice(0, -3)}`}</Text>
         </View>
         <Tag color={getStatusColor(status)}>{translateStatus(status)}</Tag>
       </View>
@@ -110,8 +110,10 @@ const Schedule: FC<ScheduleProps> = ({
                     style={{ ...styles.smallText, paddingTop: 4 }}
                   >
                     {`${getMinutesAndHours(
-                      new Date(appointment.begin),
-                    )} - ${getMinutesAndHours(new Date(appointment.end))}${
+                      getLocalTzDate(new Date(appointment.begin)),
+                    )} - ${getMinutesAndHours(
+                      getLocalTzDate(new Date(appointment.end)),
+                    )}${
                       isProfessor && appointment?.student?.name
                         ? ` - ${appointment?.student?.name}`
                         : ''

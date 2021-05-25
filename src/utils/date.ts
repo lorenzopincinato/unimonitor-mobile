@@ -62,6 +62,11 @@ const getIsoDateTime = (date: Date) => {
   return `${getIsoDate(date)}T${getMinutesAndHours(date)}`;
 };
 
+const getLocalTzDate = (date: Date) => {
+  const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() + userTimezoneOffset);
+};
+
 export {
   weekdayNames,
   getWeekdayName,
@@ -73,4 +78,5 @@ export {
   addDays,
   getIsoDate,
   getIsoDateTime,
+  getLocalTzDate,
 };

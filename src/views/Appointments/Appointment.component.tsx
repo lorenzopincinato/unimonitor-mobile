@@ -5,7 +5,11 @@ import api from '../../io/api';
 import { getUserId } from '../../io/asyncStorage';
 
 import colors from '../../styles/colors';
-import { getIsoDateTime, getMinutesAndHours } from '../../utils/date';
+import {
+  getIsoDateTime,
+  getLocalTzDate,
+  getMinutesAndHours,
+} from '../../utils/date';
 import CustomButton from '../Home/CustomButton.component';
 
 const translateStatus = (status: string) => {
@@ -90,8 +94,8 @@ const Appointment: FC<AppointmentProps> = ({
       <View style={styles.header}>
         <View>
           <Text style={styles.beginEnd}>{`${getMinutesAndHours(
-            new Date(begin),
-          )} - ${getMinutesAndHours(new Date(end))}`}</Text>
+            getLocalTzDate(new Date(begin)),
+          )} - ${getMinutesAndHours(getLocalTzDate(new Date(end)))}`}</Text>
           <Tag color={getStatusColor(status)}>{translateStatus(status)}</Tag>
         </View>
         {status === 'available' ? (
