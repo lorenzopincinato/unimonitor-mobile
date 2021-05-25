@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -99,7 +99,7 @@ const NoticeBoard = () => {
         </View>
       ) : null}
       {weekdays.length > 0 ? (
-        <View style={styles.wrapper}>
+        <ScrollView style={styles.wrapper}>
           {weekdays.map((weekday, index) => (
             <Weekday
               key={`weekday-${weekday.date}`}
@@ -110,7 +110,7 @@ const NoticeBoard = () => {
               notices={weekday.notices}
             />
           ))}
-        </View>
+        </ScrollView>
       ) : null}
 
       {isMonitor || isProfessor ? (
@@ -142,15 +142,16 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   plusButtonView: {
-    alignItems: 'flex-end',
-    paddingHorizontal: 12,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    margin: 16,
   },
   plusButton: {
     backgroundColor: colors.primaryBlue,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 28,
-    marginBottom: 10,
     height: 56,
     width: 56,
   },
