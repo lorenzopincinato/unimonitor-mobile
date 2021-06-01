@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Schedules from './Schedules.route';
 import Notices from './Notices.route';
 import EditSchedules from './EditSchedules.route';
+import EditAppointments from './EditAppointments.route';
 import Logout from '../views/Logout/Logout.view';
 import useUserInfo from '../hooks/useUserInfo';
 
@@ -26,11 +27,18 @@ const MainRoute = () => {
         options={{ title: 'Quadro de Avisos' }}
       />
       {isMonitor ? (
-        <Drawer.Screen
-          name="EditSchedules"
-          component={EditSchedules}
-          options={{ title: 'Horário das Monitorias' }}
-        />
+        <>
+          <Drawer.Screen
+            name="EditSchedules"
+            component={EditSchedules}
+            options={{ title: 'Horário das Monitorias' }}
+          />
+          <Drawer.Screen
+            name="EditAppointments"
+            component={EditAppointments}
+            options={{ title: 'Monitorias Agendadas' }}
+          />
+        </>
       ) : null}
       <Drawer.Screen
         name="Logout"
